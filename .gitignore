@@ -1,8 +1,4 @@
-logs
-target
-/.idea
-/.idea_modules
-/.classpath
-/.project
-/.settings
-/RUNNING_PID
+.ivy2/
+logs/
+target/
+docker-compose.override.yml

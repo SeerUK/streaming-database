@@ -1,0 +1,33 @@
+version: "2"
+
+services:
+  api:
+    container_name: play-streaming-api
+    image: seeruk/sbt:0.13.12
+    command: sbt -Dfile.encoding=utf-8 clean run
+    environment:
+    - VIRTUAL_PORT=9000
+    expose:
+    - 9000
+    stdin_open: true
+    volumes:
+    - ./.ivy2:/home/sbt/.ivy2
+    - .:/app
+    links:
+    - db:db.docker
+
+  db:
+    container_name: play-streamin-db
+    image: mysql:5.7
+    command: mysqld --skip-name-resolve
+    environment:
+    - MYSQL_ROOT_PASSWORD=play
+    - MYSQL_DATABASE=play
+    - MYSQL_USER=play
+    - MYSQL_PASSWORD=play
+    volumes:
+    - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+    driver: local

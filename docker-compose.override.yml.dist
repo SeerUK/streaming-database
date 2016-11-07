@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  api:
+    environment:
+    - SBT_UID=501
+    - SBT_GID=20
+
+  db:
+    ports:
+    - 3306:3306
