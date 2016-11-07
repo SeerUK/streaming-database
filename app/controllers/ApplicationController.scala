@@ -1,6 +1,8 @@
 package controllers
 
 import models.{User, UserForm}
+import play.api.libs.iteratee.Iteratee
+import play.api.libs.streams.Streams
 import play.api.mvc._
 import services.UserService
 
@@ -15,7 +17,10 @@ import scala.concurrent.Future
  */
 class ApplicationController extends Controller {
   def index = Action.async { implicit request =>
-    UserService.listAllUsers.map(users => {
+    val userEnumerator = Streams.publisherToEnumerator(UserService.streamAllUsers)
+    val userIteratee = Iteratee.getChunks[User]
+
+    userEnumerator.run(userIteratee).map(users => {
       Ok(views.html.index(UserForm.form, users))
     })
   }

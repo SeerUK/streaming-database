@@ -1,9 +1,10 @@
 package models
 
-import play.api.Play
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.Play
+import slick.backend.DatabasePublisher
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
 
@@ -57,5 +58,9 @@ object Users {
 
   def listAll: Future[Seq[User]] = {
     dbConfig.db.run(users.result)
+  }
+
+  def streamAll: DatabasePublisher[User] = {
+    dbConfig.db.stream(users.result)
   }
 }

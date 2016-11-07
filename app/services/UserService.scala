@@ -1,6 +1,8 @@
 package services
 
 import models.{User, Users}
+import slick.backend.DatabasePublisher
+
 import scala.concurrent.Future
 
 object UserService {
@@ -18,5 +20,9 @@ object UserService {
 
   def listAllUsers: Future[Seq[User]] = {
     Users.listAll
+  }
+
+  def streamAllUsers: DatabasePublisher[User] = {
+    Users.streamAll
   }
 }
