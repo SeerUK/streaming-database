@@ -18,7 +18,7 @@ services:
 
   db:
     container_name: play-streamin-db
-    image: mysql:5.7
+    image: mysql:5.6
     command: mysqld --skip-name-resolve
     environment:
     - MYSQL_ROOT_PASSWORD=play

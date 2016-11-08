@@ -3,21 +3,20 @@ package services
 import javax.inject.Inject
 
 import models.{User, UserTableDef}
-import play.api.db.slick.DatabaseConfigProvider
-import slick.backend.DatabasePublisher
+import slick.backend.{DatabaseConfig, DatabasePublisher}
 import slick.driver.JdbcProfile
-import slick.driver.MySQLDriver.api._
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 /**
  * User Service
  *
- * @param dbConfigProvider The database configuration provider.
+ * @param dbConfig The database configuration.
  */
-class UserService @Inject() (dbConfigProvider: DatabaseConfigProvider) {
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+class UserService @Inject()(dbConfig: DatabaseConfig[JdbcProfile]) {
+  import dbConfig.driver.api._
+
   private val users = TableQuery[UserTableDef]
 
   def add(user: User): Future[String] = {
