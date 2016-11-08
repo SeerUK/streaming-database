@@ -8,6 +8,7 @@ scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
   cache,
+  filters,
   ws,
 
   "com.typesafe.play" %% "play-slick" % "2.0.0" % Compile,
